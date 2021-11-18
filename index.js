@@ -15,6 +15,8 @@ const cors = (req, res) => {
     return false;
 }
 
+const users = [{id: 1, name: "Nash"}, {id: 2, name: "Jason"}];
+
 const server = http.createServer((req, res) => {
     if (cors(req, res)) {
         return;
@@ -26,7 +28,12 @@ const server = http.createServer((req, res) => {
             res.write(`<h1>Home</h1>`);
             break;
         case '/users':
-            res.write(`[{"id": 1, "name": "Nash"},{"id": 2, "name": "Jason"}]`);
+            if (req.method === 'POST') {
+                users.push({id: 3, name: 'Tobi'});
+                res.write(JSON.stringify({success: true}));
+            } else {
+                res.write(JSON.stringify(users));
+            }
             break;
         case '/tasks':
             res.write(`<h1>Tasks</h1>`);
