@@ -1,5 +1,6 @@
 const http = require('http');
 const {getUsers, addUser} = require('./repository');
+const {usersController} = require("./UsersController");
 
 
 const cors = (req, res) => {
@@ -27,12 +28,7 @@ const server = http.createServer((req, res) => {
             res.write(`<h1>Home</h1>`);
             break;
         case '/users':
-            if (req.method === 'POST') {
-                addUser('Tobi');
-                res.write(JSON.stringify({success: true}));
-            } else {
-                res.write(JSON.stringify(getUsers()));
-            }
+            usersController(req, res);
             break;
         case '/tasks':
             res.write(`<h1>Tasks</h1>`);
