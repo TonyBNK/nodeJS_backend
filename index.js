@@ -1,5 +1,4 @@
 const http = require('http');
-const {getUsers, addUser} = require('./repository');
 const {usersController} = require("./UsersController");
 
 
@@ -17,7 +16,7 @@ const cors = (req, res) => {
     return false;
 }
 
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
     if (cors(req, res)) {
         return;
     }
@@ -28,7 +27,7 @@ const server = http.createServer((req, res) => {
             res.write(`<h1>Home</h1>`);
             break;
         case '/users':
-            usersController(req, res);
+            await usersController(req, res);
             break;
         case '/tasks':
             res.write(`<h1>Tasks</h1>`);
@@ -41,5 +40,3 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(3010);
-
-console.log(http);

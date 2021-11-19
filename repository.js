@@ -1,7 +1,15 @@
-const users = [{id: 1, name: "Nash"}, {id: 2, name: "Jason"}];
+const fs = require('fs');
+
 
 const getUsers = () => {
-    return users;
+    return new Promise((resolve, reject) => {
+        fs.readFile('users.json', (err, buf) => {
+            if (err) {
+                reject(err);
+            }
+            resolve(JSON.parse(buf.toString()));
+        })
+    });
 }
 
 const addUser = (name) => {
