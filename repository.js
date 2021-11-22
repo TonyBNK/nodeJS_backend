@@ -12,8 +12,18 @@ const getUsers = () => {
     });
 }
 
-const addUser = (name) => {
-    users.push({id: 3, name});
+const addUser = async (name) => {
+    const users = await getUsers();
+    users.push({id: 3, name})
+
+    return new Promise((resolve, reject) => {
+        fs.writeFile('users.json', JSON.stringify(users), (err) => {
+            if (err) {
+                reject(err);
+            }
+            resolve();
+        });
+    });
 }
 
 exports.getUsers = getUsers;
