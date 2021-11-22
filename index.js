@@ -1,42 +1,33 @@
-const http = require('http');
 const {usersController} = require("./UsersController");
+const express = require('express');
+const {addUser} = require("./repository");
 
 
-const cors = (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Request-Method', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
-    res.setHeader('Access-Control-Allow-Headers', '*');
-    if (req.method === 'OPTIONS') {
-        res.writeHead(200);
-        res.end();
-        return true;
-    }
+const app = express();
+const port = 3010;
 
-    return false;
-}
-
-const server = http.createServer(async (req, res) => {
-    if (cors(req, res)) {
-        return;
-    }
-
-    console.log('some request arrived');
-    switch (req.url) {
-        case '/':
-            res.write(`<h1>Home</h1>`);
-            break;
-        case '/users':
-            await usersController(req, res);
-            break;
-        case '/tasks':
-            res.write(`<h1>Tasks</h1>`);
-            break;
-        default:
-            res.write(`<h1>Page not found</h1>`);
-    }
-
-    res.end();
+app.get('/', (req, res) => {
+    res.send(`<h1>Home</h1>`);
 });
 
-server.listen(3010);
+app.get('/users', async (req, res) => {
+    const users = await usersController(req, res);
+    res.send(JSON.stringify(users));
+});
+
+app.post('/users', async (req, res) => {
+    await addUser('Tobi');
+    res.send(JSON.stringify({success: true}));
+});
+
+app.get('/tasks',(req, res) => {
+    res.send(`<h1>Tasks</h1>`);
+});
+
+app.use((req, res) => {
+   res.send(404);
+});
+
+app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`)
+});
