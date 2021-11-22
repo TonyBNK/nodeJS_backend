@@ -1,6 +1,5 @@
 const {addUser, getUsers} = require("./repository");
 const express = require("express");
-const {use} = require("express/lib/router");
 
 
 const router = express.Router();
