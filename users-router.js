@@ -21,7 +21,7 @@ router
         }
     })
     .post('/', async (req, res) => {
-        await addUser('Tobi');
+        await addUser(req.body.name);
         res.send(JSON.stringify({success: true}));
     })
     .use((req, res) => {
