@@ -6,7 +6,12 @@ const router = express.Router();
 
 router
     .get('/', async (req, res) => {
-        const users = await getUsers();
+        let users = await getUsers();
+
+        if (!!req.query.search){
+            users = users.filter(u => u.name.toLowerCase().indexOf(req.query.search) > -1);
+        }
+
         res.send(JSON.stringify(users));
     })
     .get('/:id', async (req, res) => {
