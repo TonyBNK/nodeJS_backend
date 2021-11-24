@@ -15,6 +15,10 @@ const getUsers = (search) => {
     }
 }
 
+const getUser = (_id) => {
+    return User.findOne({_id});
+}
+
 const addUser = async (name) => {
     const user = new User({name});
     return user.save();
@@ -29,6 +33,7 @@ const changeUserName = async (_id, name) => {
 }
 
 exports.getUsers = getUsers;
+exports.getUser = getUser;
 exports.addUser = addUser;
 exports.removeUser = removeUser;
 exports.changeUserName = changeUserName;

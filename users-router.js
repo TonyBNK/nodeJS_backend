@@ -1,4 +1,4 @@
-const {addUser, getUsers, removeUser, changeUserName} = require("./repository");
+const {addUser, getUsers, getUser, removeUser, changeUserName} = require("./repository");
 const express = require("express");
 
 
@@ -10,9 +10,7 @@ router
         res.send(JSON.stringify(users));
     })
     .get('/:id', async (req, res) => {
-        const users = await getUsers();
-        const userId = req.params.id;
-        const user = users.find(u => u.id === +userId);
+        const user = await getUser(req.params.id);
         if (user) {
             res.send(JSON.stringify(user));
         } else {
