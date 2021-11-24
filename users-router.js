@@ -17,7 +17,6 @@ router
     .get('/:id', async (req, res) => {
         const users = await getUsers();
         const userId = req.params.id;
-        debugger
         const user = users.find(u => u.id === +userId);
         if (user) {
             res.send(JSON.stringify(user));
