@@ -16,5 +16,10 @@ const addUser = async (name) => {
     return user.save();
 }
 
+const removeUser = async (_id) => {
+    return User.deleteOne({_id});
+}
+
 exports.getUsers = getUsers;
 exports.addUser = addUser;
+exports.removeUser = removeUser;
