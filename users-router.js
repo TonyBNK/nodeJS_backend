@@ -6,12 +6,7 @@ const router = express.Router();
 
 router
     .get('/', async (req, res) => {
-        let users = await getUsers();
-
-        if (!!req.query.search) {
-            users = users.filter(u => u.name.toLowerCase().indexOf(req.query.search) > -1);
-        }
-
+        let users = await getUsers(req.query.search);
         res.send(JSON.stringify(users));
     })
     .get('/:id', async (req, res) => {
@@ -30,11 +25,11 @@ router
     })
     .delete('/:id', async (req, res) => {
         await removeUser(req.params.id);
-        res.send(JSON.stringify({success: true}));
+        res.send(204);
     })
     .put('/:id', async (req, res) => {
         await changeUserName(req.params.id, req.body.name);
-        res.send(JSON.stringify({success: true}));
+        res.send(200);
     })
     .use((req, res) => {
         res.send(404);

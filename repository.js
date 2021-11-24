@@ -7,8 +7,12 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('user', userSchema);
 
-const getUsers = () => {
-    return User.find();
+const getUsers = (search) => {
+    if (!search) {
+        return User.find();
+    } else {
+        return User.find({name: new RegExp(search)});
+    }
 }
 
 const addUser = async (name) => {
