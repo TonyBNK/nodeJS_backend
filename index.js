@@ -2,7 +2,14 @@ const express = require('express');
 const users = require('./users-router');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
+
+async function main() {
+    await mongoose.connect('mongodb://localhost/users');
+}
+
+main().catch(err => console.log(err));
 
 const app = express();
 const port = 3010;
