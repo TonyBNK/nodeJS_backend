@@ -1,4 +1,4 @@
-const {addUser, getUsers, removeUser} = require("./repository");
+const {addUser, getUsers, removeUser, changeUserName} = require("./repository");
 const express = require("express");
 
 
@@ -30,6 +30,10 @@ router
     })
     .delete('/:id', async (req, res) => {
         await removeUser(req.params.id);
+        res.send(JSON.stringify({success: true}));
+    })
+    .put('/:id', async (req, res) => {
+        await changeUserName(req.params.id, req.body.name);
         res.send(JSON.stringify({success: true}));
     })
     .use((req, res) => {

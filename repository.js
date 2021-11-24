@@ -20,6 +20,11 @@ const removeUser = async (_id) => {
     return User.deleteOne({_id});
 }
 
+const changeUserName = async (_id, name) => {
+    return User.findByIdAndUpdate(_id, {name});
+}
+
 exports.getUsers = getUsers;
 exports.addUser = addUser;
 exports.removeUser = removeUser;
+exports.changeUserName = changeUserName;
