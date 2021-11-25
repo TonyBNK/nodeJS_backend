@@ -5,11 +5,11 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 
-// async function main() {
-//     await mongoose.connect('mongodb://localhost:27017/nodeJS');
-// }
-//
-// main().catch(err => console.log(err));
+async function main() {
+    await mongoose.connect('mongodb://localhost:27017/nodeJS');
+}
+
+main().catch(err => console.log(err));
 
 const app = express();
 const port = process.env.PORT || 3010;
@@ -25,7 +25,7 @@ app
     .get('/tasks', (req, res) => {
         res.send(`<h1>Tasks</h1>`);
     })
-    //.use('/users', users)
+    .use('/users', users)
     .use((req, res) => {
         res.send(404);
     });
